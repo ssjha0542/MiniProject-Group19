@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import{Navbar,NavbarBrand,Nav,NavbarToggler,NavItem,Jumbotron, Collapse} from 'reactstrap';
+import{Navbar,NavbarBrand,Nav,NavbarToggler,NavItem,Jumbotron, Collapse,Modal,ModalBody, ModalHeader, Button} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
-
 
 
 class Header extends Component{
@@ -9,27 +8,38 @@ class Header extends Component{
     constructor(props){
         super(props);
         this.state={
-            isNavOpen: false
+            isNavOpen: false,
+            isModalOpen: false
         };
+      this.toggleNav=this.toggleNav.bind(this);
+      this.toggleModal=this.toggleModal.bind(this);
     }
-        toggleNav(){
+    toggleModal=()=>{
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+      
+  }
+        toggleNav=()=>{
           this.setState({
-              isNavOpen: !this.state.isOpen
+              isNavOpen: !this.state.isNavOpen
           });
         
-        this.toggleNav=this.toggleNav.bind(this);
+     
     }
+    
 
     render(){
         return(
         <React.Fragment>
             <Navbar dark expand="md">
           <div className="container">
+            
             <NavbarBrand className="mr-auto"href="/">
                 <img src="assests/images/logo.png"height="30"width="41"
                 alt=" Ristorante Con Fusion"/>
                 </NavbarBrand>
-        
+                <NavbarToggler onClick={this.toggleNav}/>
         <Collapse isOpen={this.state.isNavOpen}navbar>
             <Nav navbar>
                 <NavItem>
@@ -53,6 +63,13 @@ class Header extends Component{
                     </NavLink>
                 </NavItem>
             </Nav>
+            <Nav className="ml-auto"navbar>
+                <NavItem>
+                    <Button outline onclick={this.toggleModal}>
+                        <span className="fa fa-sign-in fa-lg"></span>Login
+                    </Button>
+                </NavItem>
+            </Nav>
         </Collapse>
         </div>
         </Navbar>
@@ -66,6 +83,12 @@ class Header extends Component{
                </div>
            </div>
        </Jumbotron>
+       <Modal isopen={this.state.isModalOpen} toggle={this.toggleModal}>
+           <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+           <ModalBody>
+                   
+           </ModalBody>
+       </Modal>
         </React.Fragment>
         );
     }
